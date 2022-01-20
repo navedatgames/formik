@@ -52,6 +52,7 @@ function App() {
     <div >
        <Typography align = "center"variant="h2" className={classes.headStyles}>Registration</Typography>
         <hr/>
+        
     <form onSubmit={handleSubmit}>
     <Box
       component="form"
@@ -61,15 +62,34 @@ function App() {
       noValidate
       autoComplete="off"
     >
-       <div>
-    <TextField name = "firstName" value = {formData.firstName} onChange = {handleChange} id="outlined-basic" label="FirstName" variant="outlined" />
-    <TextField name = "middleName" value = {formData.middleName} onChange = {handleChange} id="outlined-basic" label="MiddleName" variant="outlined" />
-    <TextField name = "lastName" value = {formData.lastName} onChange = {handleChange}id="outlined-basic" label="LastName" variant="outlined" />
-    <TextField name = "location" value = {formData.location} onChange = {handleChange} id="outlined-basic" label="Location" variant="outlined" />
-    <TextField name = "password" value = {formData.password} onChange = {handleChange} id="outlined-basic" type = "password" label="Password" variant="outlined" />
-    <TextField name = "email" value = {formData.email} onChange = {handleChange} id="outlined-basic" type = "email" label="Email" variant="outlined" />
-    </div>
+      <>
+      <div className="container">
+          <div className="row">
+            <div className="col">
+            <TextField name = "firstName" value = {formData.firstName} onChange = {handleChange} id="outlined-basic" label="FirstName" variant="outlined" />
+            </div>
+            <div className="col"> 
+            <TextField name = "middleName" value = {formData.middleName} onChange = {handleChange} id="outlined-basic" label="MiddleName" variant="outlined" />
+            </div>
+            <div className="col">
+            <TextField name = "lastName" value = {formData.lastName} onChange = {handleChange}id="outlined-basic" label="LastName" variant="outlined" />
+            </div>
+          </div>
+          <br/>
+          <div className="row">
+            <div className="col">
+            <TextField name = "location" value = {formData.location} onChange = {handleChange} id="outlined-basic" label="Location" variant="outlined" />
+            </div>
+            <div className="col"> 
+            <TextField name = "password" value = {formData.password} onChange = {handleChange} id="outlined-basic" type = "password" label="Password" variant="outlined" />
+            </div>
+            <div className="col">
+            <TextField name = "email" value = {formData.email} onChange = {handleChange} id="outlined-basic" type = "email" label="Email" variant="outlined" />
+            </div>
+          </div>
 
+        </div>
+        </>
     </Box>
     
 
