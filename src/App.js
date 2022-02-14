@@ -2,6 +2,8 @@ import {Button ,Typography ,Grid ,Radio,FormControl,FormLabel,RadioGroup,Box, Ch
 import {InputLabel,Select,MenuItem,Switch,TextField} from "@material-ui/core"
 import React from "react"
 import {makeStyles} from '@material-ui/core/styles'
+import { useFormik } from "formik"
+
 const useStyles = makeStyles({
   headStyles:{
     fontFamily:"oblique"
@@ -11,49 +13,74 @@ const useStyles = makeStyles({
   },
   btnStyle:{
     textAlign:'center'
+  },
+  error:{
+    color:'red',
   }
 })
 
+const initialValues = {
+  firstName:'',
+  middleName:'',
+  lastName:'',
+  location:'',
+  password:'',
+  email:'',
+  age:'',
+  enjoyed:false,
+  gender:'',
+  games:[],
+}
+
+const validate = values=>{
+  let errors = {}
+  if(!values.firstName){
+    errors.firstName = 'firstname required'
+  }
+  if(!values.middleName){
+    errors.middleName = 'middlename required'
+  }
+  if(!values.lastName){
+    errors.lastName = 'lastname required'
+  }
+  if(!values.location){
+    errors.location = 'location required'
+  }
+  if(!values.password){
+    errors.password = 'password required'
+  }
+  if(!values.age){
+    errors.age = 'Age required'
+  }
+  if(!values.email){
+    errors.email = 'email required'
+  }
+  else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)){
+    errors.email = "Invalid email format"
+  }
+  return errors
+}
+
+const onSubmit = values =>{
+  console.log("form Data",values)
+}
 function App() {
   const classes = useStyles()
-  const [age, setAge] = React.useState('');
-
-  const[formData,setFormData] = React.useState({
-    firstName:"",
-    middleName:"",
-    lastName:"",
-    location:"",
-    password:"",
-    email:"",
-    age :"",
-    isEnjoyed:false,
-    gender:""
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    validate,
   })
+  // console.log("form data",formik.values)
+  // console.log("Visited fields", formik.touched)
+  // console.log("errors",formik.errors)
 
-  // const handleChange = (event) => {
-  //   setAge(event.target.value);
-  // };
-
-  function handleChange(event){
-    const{name , value , type , checked } = event.target
-    setFormData(prevFormData=>{
-      return{
-        ...prevFormData,
-        [name]:type==="toggle"?checked:value
-      }
-    })
-  }
-  function handleSubmit(event){
-    console.log("data submitted")
-    event.preventDefault()
-    console.log(formData)
-  }
   return (
     <div >
        <Typography align = "center"variant="h2" className={classes.headStyles}>Registration</Typography>
         <hr/>
         
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={formik.handleSubmit}>
     <Box
       component="form"
       sx={{
@@ -66,25 +93,31 @@ function App() {
       <div className="container">
           <div className="row">
             <div className="col">
-            <TextField name = "firstName" value = {formData.firstName} onChange = {handleChange} id="outlined-basic" label="FirstName" variant="outlined" />
+            <TextField name = "firstName"  value = {formik.values.firstName} onBlur = {formik.handleBlur} onChange = {formik.handleChange} id="outlined-basic" label="FirstName" variant="outlined" />
+            {formik.touched.firstName && formik.errors.firstName ? <div className={classes.error}>{formik.errors.firstName}</div>:null}
             </div>
             <div className="col"> 
-            <TextField name = "middleName" value = {formData.middleName} onChange = {handleChange} id="outlined-basic" label="MiddleName" variant="outlined" />
+            <TextField name = "middleName" value = {formik.values.middleName}  onBlur = {formik.handleBlur} onChange = {formik.handleChange} id="outlined-basic" label="MiddleName" variant="outlined"  />
+            {formik.touched.middleName && formik.errors.middleName ? <div className={classes.error}>{formik.errors.middleName}</div>:null}
             </div>
             <div className="col">
-            <TextField name = "lastName" value = {formData.lastName} onChange = {handleChange}id="outlined-basic" label="LastName" variant="outlined" />
+            <TextField name = "lastName" value = {formik.values.lastName} onBlur = {formik.handleBlur} onChange = {formik.handleChange} id="outlined-basic" label="LastName" variant="outlined" />
+            {formik.touched.lastName && formik.errors.lastName ? <div className={classes.error}>{formik.errors.lastName}</div>:null}
             </div>
           </div>
           <br/>
           <div className="row">
             <div className="col">
-            <TextField name = "location" value = {formData.location} onChange = {handleChange} id="outlined-basic" label="Location" variant="outlined" />
+            <TextField name = "location" value = {formik.values.location} onBlur = {formik.handleBlur} onChange = {formik.handleChange} id="outlined-basic" label="Location" variant="outlined" />
+            {formik.touched.location && formik.errors.location ? <div className={classes.error}>{formik.errors.location}</div>:null}
             </div>
             <div className="col"> 
-            <TextField name = "password" value = {formData.password} onChange = {handleChange} id="outlined-basic" type = "password" label="Password" variant="outlined" />
+            <TextField name = "password" value = {formik.values.password} onBlur = {formik.handleBlur} onChange = {formik.handleChange} id="outlined-basic" type = "password" label="Password" variant="outlined" />
+            {formik.touched.password && formik.errors.password ? <div className={classes.error}>{formik.errors.password}</div>:null}
             </div>
             <div className="col">
-            <TextField name = "email" value = {formData.email} onChange = {handleChange} id="outlined-basic" type = "email" label="Email" variant="outlined" />
+            <TextField name = "email" value = {formik.values.email} onBlur = {formik.handleBlur} onChange = {formik.handleChange} id="outlined-basic" type = "email" label="Email" variant="outlined" />
+            {formik.touched.email && formik.errors.email ? <div className={classes.error}>{formik.errors.email}</div>:null}
             </div>
           </div>
 
@@ -111,12 +144,11 @@ function App() {
       
       <RadioGroup
     aria-labelledby="demo-radio-buttons-group-label"
-    defaultValue="male"
     name="radio-buttons-group"
     >
-    <FormControlLabel type = "radio" name = "gender" onChange = {handleChange} value="female" control={<Radio />} label="Female" />
-    <FormControlLabel type = "radio" name = "gender"onChange = {handleChange}value="male" control={<Radio />} label="Male" />
-    <FormControlLabel type = "radio" name = "gender" onChange = {handleChange} value="other" control={<Radio />} label="Other" />
+    <FormControlLabel type = "radio" name = "gender" onChange = {formik.handleChange} value="female" control={<Radio />} label="Female" />
+    <FormControlLabel type = "radio" name = "gender"onChange = {formik.handleChange}value="male" control={<Radio />} label="Male" />
+    <FormControlLabel type = "radio" name = "gender" onChange = {formik.handleChange} value="other" control={<Radio />} label="Other" />
     </RadioGroup>
     </FormControl>
     <hr/>
@@ -128,25 +160,38 @@ function App() {
   <Select
     labelId="demo-simple-select-label"
     id="demo-simple-select"
-    value={formData.age}
+    value={formik.values.age}
     name = "age"
     label="Age"
-    onChange={handleChange}
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
   >
+    
     <MenuItem value={10}>10</MenuItem>
     <MenuItem value={20}>20</MenuItem>
     <MenuItem value={30}>30</MenuItem>
   </Select>
+  {formik.touched.age && formik.errors.age ? <div className={classes.error}>{formik.errors.age}</div>:null}
 </FormControl>
    </Box>
 
      <hr/>
-    <Typography>4)Have you enjoyed the session?</Typography>
-
-    <Switch></Switch>
+    <FormControlLabel
+      control={
+        <Switch
+        id = "enjoyed"
+        name = "enjoyed"
+        onChange={formik.handleChange}
+        checked = {formik.values.enjoyed}
+        />
+      }
+      label = "Enjoyed the Session"
+      />
+   
     <hr/>
      <div className={classes.btnStyle}>
-      <button>Submit</button>
+       <Button color = "primary" variant="contained" type = "Submit">Submit</Button>
+      {/* <button>Submit</button> */}
      </div>
     </form>
     </div>
