@@ -71,7 +71,7 @@ const validationSchema = Yup.object({
 const onSubmit = values =>{
   console.log("form Data",values)
 }
-function App() {
+function OldApp() {
   const classes = useStyles()
   const formik = useFormik({
     initialValues,
@@ -100,46 +100,31 @@ function App() {
       <div className="container">
           <div className="row">
             <div className="col">
-            <TextField name = "firstName"  
-            // value = {formik.values.firstName} 
-            // onBlur = {formik.handleBlur} 
-            // onChange = {formik.handleChange} 
-            {...formik.getFieldProps('firstName')}
-            id="outlined-basic" 
-            label="FirstName" 
-            variant="outlined" />
+            <TextField name = "firstName"  value = {formik.values.firstName} onBlur = {formik.handleBlur} onChange = {formik.handleChange} id="outlined-basic" label="FirstName" variant="outlined" />
             {formik.touched.firstName && formik.errors.firstName ? <div className={classes.error}>{formik.errors.firstName}</div>:null}
             </div>
             <div className="col"> 
-            <TextField name = "middleName" 
-            // value = {formik.values.middleName} 
-            // onBlur = {formik.handleBlur} 
-            // onChange = {formik.handleChange} 
-            //reducing boiler plates
-            {...formik.getFieldProps('middleName')}
-            id="outlined-basic" 
-            label="MiddleName" 
-            variant="outlined"  />
+            <TextField name = "middleName" value = {formik.values.middleName}  onBlur = {formik.handleBlur} onChange = {formik.handleChange} id="outlined-basic" label="MiddleName" variant="outlined"  />
             {formik.touched.middleName && formik.errors.middleName ? <div className={classes.error}>{formik.errors.middleName}</div>:null}
             </div>
             <div className="col">
-            <TextField name = "lastName"  {...formik.getFieldProps('lastName')} id="outlined-basic" label="LastName" variant="outlined" />
+            <TextField name = "lastName" value = {formik.values.lastName} onBlur = {formik.handleBlur} onChange = {formik.handleChange} id="outlined-basic" label="LastName" variant="outlined" />
             {formik.touched.lastName && formik.errors.lastName ? <div className={classes.error}>{formik.errors.lastName}</div>:null}
             </div>
           </div>
           <br/>
           <div className="row">
             <div className="col">
-            <TextField name = "location"  {...formik.getFieldProps('location')} id="outlined-basic" label="Location" variant="outlined" />
+            <TextField name = "location" value = {formik.values.location} onBlur = {formik.handleBlur} onChange = {formik.handleChange} id="outlined-basic" label="Location" variant="outlined" />
             {formik.touched.location && formik.errors.location ? <div className={classes.error}>{formik.errors.location}</div>:null}
             </div>
             <div className="col"> 
-            <TextField name = "password"  {...formik.getFieldProps('password')} id="outlined-basic" type = "password" label="Password" variant="outlined" />
+            <TextField name = "password" value = {formik.values.password} onBlur = {formik.handleBlur} onChange = {formik.handleChange} id="outlined-basic" type = "password" label="Password" variant="outlined" />
             {formik.touched.password && formik.errors.password ? <div className={classes.error}>{formik.errors.password}</div>:null}
             
             </div>
             <div className="col">
-            <TextField name = "email"  {...formik.getFieldProps('email')} id="outlined-basic" type = "email" label="Email" variant="outlined" />
+            <TextField name = "email" value = {formik.values.email} onBlur = {formik.handleBlur} onChange = {formik.handleChange} id="outlined-basic" type = "email" label="Email" variant="outlined" />
             {formik.touched.email && formik.errors.email ? <div className={classes.error}>{formik.errors.email}</div>:null}
             </div>
           </div>
@@ -220,4 +205,4 @@ function App() {
   );
 }
 
-export default App;
+export default OldApp;
